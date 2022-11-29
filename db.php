@@ -4,5 +4,5 @@
 $servidor = "localhost"; $usuario = "instit41_bdComun"; $contrasenia = "#NOJLgl.I=BA"; $nombreBaseDatos = "instit41_quasarBDcomun";
 $conexionBD = new mysqli($servidor, $usuario, $contrasenia, $nombreBaseDatos);
 
-
+//fin conexion
 ?>
