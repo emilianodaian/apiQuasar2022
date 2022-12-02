@@ -18,5 +18,27 @@ if (isset($_GET["consultar"])){
     else{  echo json_encode(["success"=>0]); }
 }
 
+//Insertar
+$data = json_decode(file_get_contents("php://input"));
+           
+    $nombre=$data->nombre;
+           
+        
+            try{
+               $sqlBusca = mysqli_query($conexionBD, "SELECT nombre FROM lugar WHERE nombre =".$nombre);
+ 
+            if(mysqli_num_rows($sqlBusca)>0){
+            echo json_encode("YA EXISTE ESTE LUGAR");  
+         
+            }else{
+
+                $sqlLugar = mysqli_query($conexionBD,"INSERT INTO lugar(nombre) VALUES('$nombre')");
+                echo json_encode("LUGAR REGISTRADO CORRECTAMENTE");
+            }
+
+            }catch(Exception $e){
+
+                echo json_encode($e->getMessage());
+            }
 
 ?>
