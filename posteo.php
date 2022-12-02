@@ -40,7 +40,7 @@ if(isset($_GET["insertar"])){
     $etiquetas=$data->etiquetas;
     $id_Usuario=$data->id_Usuario;
 
-        if(($correo!="")&&($nombre!="")){
+        if(($titulo!="")&&($epigrafe!="")&&($copete!="")&&($cuerpo!="")&&($cuerpo!="")&&($idLugar!="")&&($fuentes!="")&&($img!="")&&($etiquetas!="")&&($id_Usuario!="")){
             
     $sqlPosteo = mysqli_query($conexionBD,"INSERT INTO posteo(titulo,epigrafe,copete,cuerpo,id_lugar,Fuentes,ImagenDestacada,Etiquetas,id_Usuario) VALUES('$titulo','$epigrafe','$titulo','$copete','$cuerpo','$idLugar','$fuentes','$img','$etiquetas','$id_Usuario')");
     echo json_encode(["success"=>1]);
