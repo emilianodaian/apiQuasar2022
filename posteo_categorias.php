@@ -34,23 +34,10 @@ $data = json_decode(file_get_contents("php://input"));
     $id_posteo=$data->id_posteo;
     $id_categoria=$data->id_categoria;
         
-            try{
-               $sqlPosteocategorias = mysqli_query($conexionBD, "SELECT  id_posteocategorias,id_posteo, id_categoria FROM posteo_categorias WHERE id_postrocategorias =".$id_posteocategorias);
- 
-            if(mysqli_num_rows($sqlBusca)>0){
-            echo json_encode("YA EXISTE ESTE REGISTRO");  
-         
-            }else{
-
-                $sqlPacientes = mysqli_query($conexionBD,"INSERT INTO posteo_categorias(id_posteocategorias, id_posteo, id_categoria")
-                 VALUES('$id_posteocategorias','$id_posteo','$id_categoria') ");
-                echo json_encode("REGISTRADO CORRECTAMENTE");
-            }
-
-            }catch(Exception $e){
-
-                echo json_encode($e->getMessage());
-            }
+        $sqlPosteocategorias = mysqli_query($conexionBD,"INSERT INTO posteo_categorias(id_posteocategorias, id_posteo, id_categoria)
+            VALUES('$id_posteocategorias','$id_posteo','$id_categoria') ");
+            echo json_encode("REGISTRADO CORRECTAMENTE");
+            
 
 //actualizar los datos de un posteo
 if(isset($_GET["actualizar"])){
