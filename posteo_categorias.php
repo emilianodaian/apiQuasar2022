@@ -55,7 +55,7 @@ if(isset($_GET["actualizar"])){
     echo json_encode(["success"=>1]);
     exit();
 }
-
+//Listado de posteo_categorias
 $sqlPosteoCategorias = mysqli_query($conexionBD,"SELECT * FROM posteo_categorias ");
 if(mysqli_num_rows($sqlPosteoCategorias) > 0){
     $posteocategorias = mysqli_fetch_all($sqlPosteoCategorias,MYSQLI_ASSOC);
