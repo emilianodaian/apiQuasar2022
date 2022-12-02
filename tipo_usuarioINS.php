@@ -9,35 +9,20 @@ include('bd.php');
 
 
         $data = json_decode(file_get_contents("php://input"));
-           
-    $nombre=$data->nombre;
-    $apellido=$data->apellido;
-    $dni=$data -> DNI;
-    $correo= $data -> email;
-    $password = $data -> newpass;
-    
-    $celular = $data -> phone;
-    $fn = $data -> dp;
+        
+    $cat_usuario=$data->categoriausuario;
 
-    $tu = 2;
-           
+        
         
             try{
-               $sqlBusca = mysqli_query($conexionBD, "SELECT  num_historia_clinica, nombre, apellido, DNI, tel_celular,
-               email, fecha_nacimiento, tipo_usuario FROM paciente WHERE DNI =".$dni);
- 
-            if(mysqli_num_rows($sqlBusca)>0){
-            echo json_encode("YA EXISTE UN PACIENTE CON ESTE DNI");  
-         
-            }else{
 
-                $sqlPacientes = mysqli_query($conexionBD,"INSERT INTO paciente(nombre, apellido, DNI, tel_celular,
-                email, contrasena, fecha_nacimiento, tipo_usuario)
-                 VALUES('$nombre','$apellido','$dni','$celular','$correo','$password','$fn', $tu) ");
-                echo json_encode("PACIENTE REGISTRADO CORRECTAMENTE");
+
+                $sqlPacientes = mysqli_query($conexionBD,"INSERT INTO tipo_usuario(cat_usuario)
+                VALUES('$cat_usuario)");
+                echo json_encode("Tipo de usuario registrado");
             }
 
-            }catch(Exception $e){
+            catch(Exception $e){
 
                 echo json_encode($e->getMessage());
             }
