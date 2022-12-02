@@ -32,7 +32,7 @@ if(isset($_GET["insertar"])){
     $id_catusuario=$data->catusuario;
         if(($correo!="")&&($nombre!="")){
             
-    $sqlcategoria = mysqli_query($conexionBD,"INSERT INTO Categorias(nombre,correo) VALUES('$nombre','$correo') ");
+    $sqlcategoria = mysqli_query($conexionBD,"INSERT INTO categorias(nombre) VALUES('$nombre') ");
     echo json_encode(["success"=>1]);
         }
     exit();
@@ -46,15 +46,15 @@ if(isset($_GET["actualizar"])){
     $id_tipousuario=$data->nombre;
     $id_catusuario=$data->correo;
     
-    $sqlcategoria = mysqli_query($conexionBD,"UPDATE empleados SET nombre='$nombre',correo='$correo' WHERE id='$id'");
+    $sqlcategoria = mysqli_query($conexionBD,"UPDATE categorias SET categorias='$categoria',nombre='$nombre' WHERE id='$id'");
     echo json_encode(["success"=>1]);
     exit();
 }
 // Consulta todos los registros de la tabla empleados
-$sqlcategoria = mysqli_query($conexionBD,"SELECT * FROM empleados ");
-if(mysqli_num_rows($sqlEmpleaados) > 0){
-    $categoria = mysqli_fetch_all($sqlEmpleaados,MYSQLI_ASSOC);
-    echo json_encode($empleaados);
+$sqlcategoria = mysqli_query($conexionBD,"SELECT * FROM  ");
+if(mysqli_num_rows($sqlcategoria) > 0){
+    $categoria = mysqli_fetch_all($sqlcategoria,MYSQLI_ASSOC);
+    echo json_encode($categoria);
 }
-else{ echo json_encode([["success"categoria]]); }
+else{ echo json_encode([["success"=>0]]); }
 ?>
