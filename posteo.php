@@ -9,7 +9,7 @@ include_once 'db.php';
 
 //PRUEBA COMMIT ! 
 
-if (isset($_GET["consultar"])){
+if (isset($_POST["consultar"])){
     $sqlPosteo = mysqli_query($conexionBD,"SELECT * FROM posteo WHERE id_posteo=".$_GET["consultar"]);
     if(mysqli_num_rows($sqlPosteo) > 0){
         $posteos = mysqli_fetch_all($sqlPosteo,MYSQLI_ASSOC);
@@ -20,7 +20,7 @@ if (isset($_GET["consultar"])){
 }
 //borrar pero se le debe de enviar una clave ( para borrado )
 if (isset($_GET["borrar"])){
-    $sqlPosteo = mysqli_query($conexionBD,"DELETE FROM posteo WHERE id=".$_GET["borrar"]);
+    $sqlPosteo = mysqli_query($conexionBD,"DELETE FROM posteo WHERE id_posteo=".$_GET["borrar"]);
     if($sqlPosteo){
         echo json_encode(["success"=>1]);
         exit();
@@ -64,7 +64,7 @@ if(isset($_GET["actualizar"])){
     $etiquetas=$data->etiquetas;
     $id_Usuario=$data->id_Usuario;
     
-    $sqlPosteo = mysqli_query($conexionBD,"UPDATE posteo SET titulo='$titulo',epigrafe='$epigrafe',copete='$copete',cuerpo='$cuerpo',id_lugar='$idlugar',Fuentes='$fuentes',ImagenDestacada='$img',Etiquetas='$etiquetas',id_usuarios=$id_Usuario WHERE id='$id'");
+    $sqlPosteo = mysqli_query($conexionBD,"UPDATE posteo SET titulo='$titulo',epigrafe='$epigrafe',copete='$copete',cuerpo='$cuerpo',id_lugar='$idlugar',Fuentes='$fuentes',ImagenDestacada='$img',Etiquetas='$etiquetas',id_usuarios=$id_Usuario WHERE id_posteo='$id'");
     echo json_encode(["success"=>1]);
     exit();
 }
