@@ -10,7 +10,7 @@ include_once 'db.php';
 //PRUEBA COMMIT ! 
 
 if (isset($_POST["consultar"])){
-    $sqlPosteo = mysqli_query($conexionBD,"SELECT * FROM posteo WHERE id_posteo=".$_GET["consultar"]);
+    $sqlPosteo = mysqli_query($conexionBD,"SELECT * FROM posteo WHERE id_posteo=1");
     if(mysqli_num_rows($sqlPosteo) > 0){
         $posteos = mysqli_fetch_all($sqlPosteo,MYSQLI_ASSOC);
         echo json_encode($posteos);
