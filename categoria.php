@@ -7,4 +7,54 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once 'db.php';
 
+if (isset($_GET["consultar"])){
+    $sqlcategoria = mysqli_query($conexionBD,"SELECT * FROM categoria WHERE id=".$_GET["consultar"]);
+    if(mysqli_num_rows($sqlcategoria) > 0){
+        $categoria = mysqli_fetch_all($sqlcategoria,MYSQLI_ASSOC);
+        echo json_encode($categoria);
+        exit();
+    }
+    else{  echo json_encode(["success"=>0]); }
+}
+//borrar pero se le debe de enviar una clave ( para borrado )
+if (isset($_GET["borrar"])){
+    $sqlcategoria = mysqli_query($conexionBD,"DELETE FROM categoria WHERE id=".$_GET["borrar"]);
+    if($sqlcategoria){
+        echo json_encode(["success"=>1]);
+        exit();
+    }
+    else{  echo json_encode(["success"=>0]); }
+}
+//Inserta un nuevo registro y recepciona en método post los datos de nombre y correo
+if(isset($_GET["insertar"])){
+    $data = json_decode(file_get_contents("php://input"));
+    $id_tipousuario=$data->tipousuario;
+    $id_catusuario=$data->catusuario;
+        if(($correo!="")&&($nombre!="")){
+            
+    $sqlcategoria = mysqli_query($conexionBD,"INSERT INTO Categorias(nombre,correo) VALUES('$nombre','$correo') ");
+    echo json_encode(["success"=>1]);
+        }
+    exit();
+}
+// Actualiza datos pero recepciona datos de nombre, correo y una clave para realizar la actualización
+if(isset($_GET["actualizar"])){
+    
+    $data = json_decode(file_get_contents("php://input"));
+
+    $id=(isset($data->id))?$data->id:$_GET["actualizar"];
+    $id_tipousuario=$data->nombre;
+    $id_catusuario=$data->correo;
+    
+    $sqlcategoria = mysqli_query($conexionBD,"UPDATE empleados SET nombre='$nombre',correo='$correo' WHERE id='$id'");
+    echo json_encode(["success"=>1]);
+    exit();
+}
+// Consulta todos los registros de la tabla empleados
+$sqlcategoria = mysqli_query($conexionBD,"SELECT * FROM empleados ");
+if(mysqli_num_rows($sqlEmpleaados) > 0){
+    $categoria = mysqli_fetch_all($sqlEmpleaados,MYSQLI_ASSOC);
+    echo json_encode($empleaados);
+}
+else{ echo json_encode([["success"categoria]]); }
 ?>
