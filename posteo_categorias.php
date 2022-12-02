@@ -29,18 +29,28 @@ if (isset($_GET["borrar"])){
 }
 
 //agregar un posteo
-if(isset($_GET["insertar"])){
-    $data = json_decode(file_get_contents("php://input"));
-    $id_posteocategorias=$data->id_posteocategorias;
+$data = json_decode(file_get_contents("php://input"));
+    $id_posteocategorias->data->id_posteocategorias;    
     $id_posteo=$data->id_posteo;
-    $id_categoria=$data->$id_categoria;
-        if(($id_posteocategorias!="")&&($id_posteo!="")&&($id_categoria!="")){
-            
-    $sqlEmpleaados = mysqli_query($conexionBD,"INSERT INTO posteo_categorias(id_posteocategorias,id_posteo,id_catgoria) VALUES('$id_posteocategorias','$id_posteo','$id_categoria') ");
-    echo json_encode(["success"=>1]);
-        }
-    exit();
-}
+    $id_categoria=$data->id_categoria;
+        
+            try{
+               $sqlPosteocategorias = mysqli_query($conexionBD, "SELECT  id_posteocategorias,id_posteo, id_categoria FROM posteo_categorias WHERE id_postrocategorias =".$id_posteocategorias);
+ 
+            if(mysqli_num_rows($sqlBusca)>0){
+            echo json_encode("YA EXISTE ESTE REGISTRO");  
+         
+            }else{
+
+                $sqlPacientes = mysqli_query($conexionBD,"INSERT INTO posteo_categorias(id_posteocategorias, id_posteo, id_categoria")
+                 VALUES('$id_posteocategorias','$id_posteo','$id_categoria') ");
+                echo json_encode("REGISTRADO CORRECTAMENTE");
+            }
+
+            }catch(Exception $e){
+
+                echo json_encode($e->getMessage());
+            }
 
 //actualizar los datos de un posteo
 if(isset($_GET["actualizar"])){
