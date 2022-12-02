@@ -7,6 +7,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once 'db.php';
 
+//PRUEBA COMMIT ! 
+
 if (isset($_GET["consultar"])){
     $sqlPosteo = mysqli_query($conexionBD,"SELECT * FROM posteo WHERE id=".$_GET["consultar"]);
     if(mysqli_num_rows($sqlPosteo) > 0){
