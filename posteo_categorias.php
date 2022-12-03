@@ -20,7 +20,7 @@ if (isset($_GET["consultar"])){
 
 //borrado de un registro por id_posteocategorias
 if (isset($_GET["borrar"])){
-    $sqlPosteoCategorias = mysqli_query($conexionBD,"DELETE FROM posteo_categorias WHERE id=".$_GET["borrar"]);
+    $sqlPosteoCategorias = mysqli_query($conexionBD,"DELETE FROM posteo_categorias WHERE idposteocategorias=".$_GET["borrar"]);
     if($sqlPosteoCategorias){
         echo json_encode(["success"=>1]);
         exit();

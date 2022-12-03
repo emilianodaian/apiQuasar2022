@@ -8,7 +8,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 include_once 'db.php';
 
 if (isset($_GET["consultar"])){
-    $sqlcategoria = mysqli_query($conexionBD,"SELECT * FROM categoria WHERE id=".$_GET["consultar"]);
+    $sqlcategoria = mysqli_query($conexionBD,"SELECT * FROM categorias WHERE idcategorias=".$_GET["consultar"]);
     if(mysqli_num_rows($sqlcategoria) > 0){
         $categoria = mysqli_fetch_all($sqlcategoria,MYSQLI_ASSOC);
         echo json_encode($categoria);
@@ -18,7 +18,7 @@ if (isset($_GET["consultar"])){
 }
 //borrar pero se le debe de enviar una clave ( para borrado )
 if (isset($_GET["borrar"])){
-    $sqlcategoria = mysqli_query($conexionBD,"DELETE FROM categoria WHERE id=".$_GET["borrar"]);
+    $sqlcategoria = mysqli_query($conexionBD,"DELETE FROM categorias WHERE idcategorias=".$_GET["borrar"]);
     if($sqlcategoria){
         echo json_encode(["success"=>1]);
         exit();
