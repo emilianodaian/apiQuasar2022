@@ -43,8 +43,33 @@
             header("HTTP/1.1 200 OK");
             echo json_encode($idPost);
         }
-
         exit;
-    
     }
+
+    if($_SERVER['REQUEST_METHOD'] == 'PUT'){
+        $sql="UPDATE usuarios SET nombres=:nombres, apellidos=:apellidos, usuario=:usuario, 
+        contrasenia=:contrasenia, id_tipoUsuario=:id_tipoUsuario WHERE id_usuarios=:id";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':nombres', $_GET['nombres']);
+        $stmt->bindValue(':apellidos', $_GET['apellidos']);
+        $stmt->bindValue(':usuario', $_GET['usuario']);
+        $stmt->bindValue(':contrasenia', $_GET['contrasenia']);
+        $stmt->bindValue(':id_tipoUsuario', $_GET['id_tipoUsuario']);
+        $stmt->bindValue(':id', $_GET['id']);
+        $stmt->execute();       
+        header("HTTP/1.1 200 OK");
+        exit;
+    }
+
+    if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
+        $sql="DELETE FROM usuarios WHERE id_usuarios=:id";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':id', $_GET['id']);
+        $stmt->execute();       
+        header("HTTP/1.1 200 OK");
+        exit;
+    }
+
 ?>
