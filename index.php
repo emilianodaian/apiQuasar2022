@@ -3,6 +3,8 @@
 
     $pdo = new Conexion();
 
+
+    //METODO GET PARA CONSULTAR X ID Y TOTAL
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
             if(isset($_GET['id'])){
@@ -25,6 +27,8 @@
             }
         }
     
+    
+        //METODO POST PARA REALIZAR INSERT
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $sql="INSERT INTO usuarios (nombres, apellidos, usuario, contrasenia, id_tipoUsuario) 
         VALUES (:nombres, :apellidos, :usuario, :contrasenia, :id_tipoUsuario)";
@@ -46,6 +50,7 @@
         exit;
     }
 
+    //METODO PUT PARA ACTUALIZAR UN REGISTRO
     if($_SERVER['REQUEST_METHOD'] == 'PUT'){
         $sql="UPDATE usuarios SET nombres=:nombres, apellidos=:apellidos, usuario=:usuario, 
         contrasenia=:contrasenia, id_tipoUsuario=:id_tipoUsuario WHERE id_usuarios=:id";
@@ -62,6 +67,7 @@
         exit;
     }
 
+    //METODO DELETE PARA ELIMINAR UN REGISTRO
     if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
         $sql="DELETE FROM usuarios WHERE id_usuarios=:id";
 
