@@ -8,17 +8,6 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 
 include_once 'db.php';
 
-//Comando de consulta por ID
-if (isset($_GET["consultar"])){
-    $sqlEmpleaados = mysqli_query($conexionBD,"SELECT * FROM lugar WHERE id=".$_GET["consultar"]);
-    if(mysqli_num_rows($sqlEmpleaados) > 0){
-        $empleaados = mysqli_fetch_all($sqlEmpleaados,MYSQLI_ASSOC);
-        echo json_encode($empleaados);
-        exit();
-    }
-    else{  echo json_encode(["success"=>0]); }
-}
-
 //Insertar
 $data = json_decode(file_get_contents("php://input"));
 
