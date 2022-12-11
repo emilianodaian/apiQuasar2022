@@ -6,7 +6,7 @@ header("Access-Control-Allow-Methods: GET,POST, DELETE, UPDATE");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
-include ('bd.php');
+include ('conexioBD.php');
 
 $data = json_decode(file_get_contents("php://input"));
 

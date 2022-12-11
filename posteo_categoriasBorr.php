@@ -5,7 +5,7 @@ header("Access-Control-Allow-Methods: GET,POST, DELETE");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
-include('bd.php');
+include('conexionBD.php');
 
 $sqlPosteocategorias = mysqli_query($conexionBD,"DELETE FROM posteo_categorias WHERE id_posteocategorias=".$_GET["borrar"]);
 

@@ -1,65 +1,74 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: access");
-header("Access-Control-Allow-Methods: GET,POST");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    include 'conexionBD.php';
 
-include_once 'db.php';
+    $pdo = new Conexion();
 
-//consultar por id_posteocategorias
-if (isset($_GET["consultar"])){
-    $sqlPosteoCategorias = mysqli_query($conexionBD,"SELECT * FROM posteo_categorias WHERE id_posteocategorias=".$_GET["consultar"]);
-    if(mysqli_num_rows($sqlPosteocategorias) > 0){
-        $posteocategorias = mysqli_fetch_all($sqlPosteoCategorias,MYSQLI_ASSOC);
-        echo json_encode($posteocategorias);
-        exit();
-    }
-    else{  echo json_encode(["success"=>0]); }
-}
 
-//borrado de un registro por id_posteocategorias
-if (isset($_GET["borrar"])){
-    $sqlPosteoCategorias = mysqli_query($conexionBD,"DELETE FROM posteo_categorias WHERE idposteocategorias=".$_GET["borrar"]);
-    if($sqlPosteoCategorias){
-        echo json_encode(["success"=>1]);
-        exit();
-    }
-    else{  echo json_encode(["success"=>0]); }
-}
+    //METODO GET PARA CONSULTAR X ID Y TOTAL
+    if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
-//agregar un posteo
-$data = json_decode(file_get_contents("php://input"));
-    $id_posteocategorias->data->id_posteocategorias;    
-    $id_posteo=$data->id_posteo;
-    $id_categoria=$data->id_categoria;
-        
-        $sqlPosteocategorias = mysqli_query($conexionBD,"INSERT INTO posteo_categorias(id_posteocategorias, id_posteo, id_categoria)
-            VALUES('$id_posteocategorias','$id_posteo','$id_categoria') ");
-            echo json_encode("REGISTRADO CORRECTAMENTE");
-            
+            if(isset($_GET['id'])){
+                $sql = $pdo->prepare("SELECT * FROM posteo_categorias WHERE id_posteocategorias=:id");
+                $sql->bindValue(':id', $_GET['id']);
+                $sql->execute();
+                $sql->setFetchMode(PDO::FETCH_ASSOC);
+                header("HTTP/1.1 200 OK");
+                echo json_encode($sql->fetchAll());
+                exit;
+            }
 
-//actualizar los datos de un posteo
-if(isset($_GET["actualizar"])){
+            else{
+                $sql = $pdo->prepare("SELECT * FROM posteo_categorias");
+                $sql->execute();
+                $sql->setFetchMode(PDO::FETCH_ASSOC);
+                header("HTTP/1.1 200 OK");
+                echo json_encode($sql->fetchAll());
+                exit;
+            }
+        }
     
-    $data = json_decode(file_get_contents("php://input"));
-
-    $id_posteocategorias=(isset($data->id_posteocategorias))?$data->id_posteocategorias:$_GET["actualizar"];
-    $id_posteo=$data->id_posteo;
-    $id_categoria=$data->id_categoria;
     
-    $sqlPostoCategorias = mysqli_query($conexionBD,"UPDATE posteo_categorias SET id_posteo='$id_posteo',id_categoria='$id_categoria' WHERE id_posteocategorias='$id_posteocategorias'");
-    echo json_encode(["success"=>1]);
-    exit();
-}
-//Listado de posteo_categorias
-$sqlPosteoCategorias = mysqli_query($conexionBD,"SELECT * FROM posteo_categorias ");
-if(mysqli_num_rows($sqlPosteoCategorias) > 0){
-    $posteocategorias = mysqli_fetch_all($sqlPosteoCategorias,MYSQLI_ASSOC);
-    echo json_encode($posteocategorias);
-}
-else{ echo json_encode([["success"=>0]]); }
+        //METODO POST PARA REALIZAR INSERT
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $sql="INSERT INTO posteo_categorias (id_posteo, id_categoria) 
+        VALUES (:id_posteo, :id_categoria)";
 
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':id_posteo', $_POST['id_posteo']);
+        $stmt->bindValue(':id_categoria', $_POST['id_categoria']);
+        $stmt->execute();
 
+        $idPost=$pdo->lastInsertId();
+
+        if($idPost){
+            header("HTTP/1.1 200 OK");
+            echo json_encode($idPost);
+        }
+        exit;
+    }
+
+    //METODO PUT PARA ACTUALIZAR UN REGISTRO
+    if($_SERVER['REQUEST_METHOD'] == 'PUT'){
+        $sql="UPDATE posteo_categorias SET id_posteo=:id_posteo, id_categoria=:id_categoria WHERE id_posteocategorias=:id";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':id_posteo', $_GET['id_posteo']);
+        $stmt->bindValue(':id_categoria', $_GET['id_categoria']);
+        $stmt->bindValue(':id', $_GET['id']);
+        $stmt->execute();       
+        header("HTTP/1.1 200 OK");
+        exit;
+    }
+
+    //METODO DELETE PARA ELIMINAR UN REGISTRO
+    if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
+        $sql="DELETE FROM posteo_categorias WHERE id_posteocategorias=:id";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':id', $_GET['id']);
+        $stmt->execute();       
+        header("HTTP/1.1 200 OK");
+        exit;
+    }
 
 ?>
