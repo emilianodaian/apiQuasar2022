@@ -8,7 +8,7 @@
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
             if(isset($_GET['id'])){
-                $sql = $pdo->prepare("SELECT * FROM posteo_categorias WHERE id_posteocategorias=:id");
+                $sql = $pdo->prepare("SELECT * FROM posteo_categorias WHERE id_posteo_categorias=:id");
                 $sql->bindValue(':id', $_GET['id']);
                 $sql->execute();
                 $sql->setFetchMode(PDO::FETCH_ASSOC);
@@ -49,7 +49,7 @@
 
     //METODO PUT PARA ACTUALIZAR UN REGISTRO
     if($_SERVER['REQUEST_METHOD'] == 'PUT'){
-        $sql="UPDATE posteo_categorias SET id_posteo=:id_posteo, id_categoria=:id_categoria WHERE id_posteocategorias=:id";
+        $sql="UPDATE posteo_categorias SET id_posteo=:id_posteo, id_categoria=:id_categoria WHERE id_posteo_categorias=:id";
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue(':id_posteo', $_GET['id_posteo']);
@@ -62,7 +62,7 @@
 
     //METODO DELETE PARA ELIMINAR UN REGISTRO
     if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
-        $sql="DELETE FROM posteo_categorias WHERE id_posteocategorias=:id";
+        $sql="DELETE FROM posteo_categorias WHERE id_posteo_categorias=:id";
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue(':id', $_GET['id']);
