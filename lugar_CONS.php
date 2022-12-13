@@ -7,16 +7,28 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
 include_once 'db.php';
+$pdo = new Conexion();
 
-//Comando de consulta por ID
-if (isset($_GET["consultar"])){
-    $sqlEmpleaados = mysqli_query($conexionBD,"SELECT * FROM lugar WHERE id=".$_GET["consultar"]);
-    if(mysqli_num_rows($sqlEmpleaados) > 0){
-        $empleaados = mysqli_fetch_all($sqlEmpleaados,MYSQLI_ASSOC);
-        echo json_encode($empleaados);
-        exit();
+if($_SERVER['REQUEST_METHOD'] == 'GET'){
+
+    if(isset($_GET['id'])){
+        $sql = $pdo->prepare("SELECT * FROM lugar WHERE id_lugar=:id");
+        $sql->bindValue(':id', $_GET['id']);
+        $sql->execute();
+        $sql->setFetchMode(PDO::FETCH_ASSOC);
+        header("HTTP/1.1 200 OK");
+        echo json_encode($sql->fetchAll());
+        exit;
     }
-    else{  echo json_encode(["success"=>0]); }
+
+    else{
+        $sql = $pdo->prepare("SELECT * FROM lugar");
+        $sql->execute();
+        $sql->setFetchMode(PDO::FETCH_ASSOC);
+        header("HTTP/1.1 200 OK");
+        echo json_encode($sql->fetchAll());
+        exit;
+    }
 }
 
 ?>
