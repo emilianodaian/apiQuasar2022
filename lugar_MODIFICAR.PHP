@@ -8,31 +8,18 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 
 include_once 'db.php';
 
+$pdo = new Conexion();
+
 //COMANDO MODIFICAR
+if($_SERVER['REQUEST_METHOD'] == 'PUT'){
+    $sql="UPDATE lugar SET nombre=:nombre WHERE id_lugar=:id";
 
-$data = json_decode(file_get_contents("php://input"));
-
-$lugar=(isset($data->id_lugar))?$data->id_lugar:$_GET["actualizar"];
-$nombre=$data->nombre;
-
-
-
-
-try {
-    $lugarmodif= mysqli_query($conexionBD,"UPDATE lugar SET nombre='$nombre' WHERE id_lugar='$lugar'");
-
-if($lugarmodif){echo json_encode(['lugar modificado']);
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':nombre', $_GET['nombre']);
+    $stmt->bindValue(':id', $_GET['id']);
+    $stmt->execute();       
+    header("HTTP/1.1 200 OK");
+    exit;
 }
-else{echo json_encode("ERROR");}
-
-} catch (\Throwable $th) {
-    echo json_encode('Ha ocurrido un error'.$th);
-}
-
-
-
-
-
-
 
 ?>
