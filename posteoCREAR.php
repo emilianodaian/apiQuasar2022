@@ -5,8 +5,8 @@
     
         //METODO POST PARA REALIZAR INSERT
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $sql="INSERT INTO posteo(titulo,epigrafe,copete,cuerpo,id_lugar,Fuentes,ImagenDestacada,Etiquetas,id_Usuario) 
-        VALUES (:titulo, :epigrafe, :copete, :cuerpo, :lugar,:fuentes, :imagen, :etiquetas, :id_Usuario)";
+        $sql="INSERT INTO posteo(titulo,epigrafe,copete,cuerpo,id_lugar,Fuentes, Visible, ImagenDestacada,Etiquetas,id_Usuario) 
+        VALUES (:titulo, :epigrafe, :copete, :cuerpo, :lugar,:fuentes, :visible, :imagen, :etiquetas, :id_Usuario)";
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue(':titulo', $_POST['titulo']);
@@ -15,6 +15,7 @@
         $stmt->bindValue(':cuerpo', $_POST['cuerpo']);
         $stmt->bindValue(':lugar', $_POST['lugar']);
         $stmt->bindValue(':fuentes', $_POST['fuentes']);
+        $stmt->bindValue(':visible', $_POST['visible']);
         $stmt->bindValue(':imagen', $_POST['imagen']);
         $stmt->bindValue(':etiquetas', $_POST['etiquetas']);
         $stmt->bindValue(':id_Usuario', $_POST['id_Usuario']);

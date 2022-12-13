@@ -6,7 +6,7 @@
     //METODO PUT PARA ACTUALIZAR UN REGISTRO
     if($_SERVER['REQUEST_METHOD'] == 'PUT'){
         $sql="UPDATE posteo SET titulo=:titulo, epigrafe=:epigrafe, copete=:copete, 
-        cuerpo=:cuerpo, lugar=:lugar, fuentes=:fuentes, imagen=:imagen, etiquetas=:etiquetas, id_Usuario=:id_Usuario  WHERE id_posteo=:id";
+        cuerpo=:cuerpo, lugar=:lugar, fuentes=:fuentes, imagen=:imagen, visible=:visible, etiquetas=:etiquetas, id_Usuario=:id_Usuario  WHERE id_posteo=:id";
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue(':titulo', $_POST['titulo']);
@@ -16,6 +16,7 @@
         $stmt->bindValue(':lugar', $_POST['lugar']);
         $stmt->bindValue(':fuentes', $_POST['fuentes']);
         $stmt->bindValue(':imagen', $_POST['imagen']);
+        $stmt->bindValue(':visible', $_POST['visible']);
         $stmt->bindValue(':etiquetas', $_POST['etiquetas']);
         $stmt->bindValue(':id_Usuario', $_POST['id_Usuario']);
         $stmt->bindValue(':id', $_GET['id']);
