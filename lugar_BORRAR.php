@@ -7,23 +7,19 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
 include_once 'db.php';
+$pdo = new Conexion();
 
-//Borrar
 
-try{
-    $borrarLugar = mysqli_query($conexionBD,"DELETE FROM lugar WHERE id_lugar=".$_GET["borrar"]);
-    
-    if(window.confirm("¿Está seguro de eliminar este lugar?")){
-        if($borrarLugar){
-            echo json_encode("LUGAR BORRADO CORRECTAMENTE");
-        }
-        else{  echo json_encode("Algo Falló.Vuelva a intentarlo"); 
-        }
+ //METODO DELETE PARA ELIMINAR UN REGISTRO
+ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
+    $sql="DELETE FROM lugar WHERE id_lugar=:id";
 
-    }catch(Exception $e){
-    
-        echo json_encode($e->getMessage());
-    }
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':id', $_GET['id']);
+    $stmt->execute();       
+    header("HTTP/1.1 200 OK");
+    exit;
 }
+
 
 ?>
