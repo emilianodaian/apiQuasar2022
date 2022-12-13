@@ -12,8 +12,13 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
     
         //METODO POST PARA REALIZAR INSERT
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $sql="INSERT INTO posteo(titulo,epigrafe,copete,cuerpo,id_lugar,Fuentes, Visible, ImagenDestacada,Etiquetas,id_Usuario) 
+        $sql="INSERT INTO posteo(Titulo,Epigrafe,Copete,Cuerpo,id_lugar,Fuentes, Visible, ImagenDestacada,Etiquetas,Id_Usuario) 
         VALUES (:titulo, :epigrafe, :copete, :cuerpo, :lugar,:fuentes, :visible, :imagen, :etiquetas, :id_Usuario)";
+
+        /*
+         INSERT INTO posteo(Titulo,Epigrafe,Copete,Cuerpo,id_lugar,Fuentes, Visible, ImagenDestacada,Etiquetas,Id_Usuario) 
+        VALUES (:titulo, :epigrafe, :copete, :cuerpo, :lugar,:fuentes, :visible, :imagen, :etiquetas, :id_Usuario) 
+         */
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue(':titulo', $_POST['titulo']);

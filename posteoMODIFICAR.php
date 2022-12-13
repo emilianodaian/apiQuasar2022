@@ -14,20 +14,21 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 
     //METODO PUT PARA ACTUALIZAR UN REGISTRO
     if($_SERVER['REQUEST_METHOD'] == 'PUT'){
-        $sql="UPDATE posteo SET titulo=:titulo, epigrafe=:epigrafe, copete=:copete, 
-        cuerpo=:cuerpo, lugar=:lugar, fuentes=:fuentes, imagen=:imagen, visible=:visible, etiquetas=:etiquetas, id_Usuario=:id_Usuario  WHERE id_posteo=:id";
+        $sql="UPDATE posteo SET Titulo=:Titulo, Epigrafe=:Epigrafe, Copete=:Copete, 
+        Cuerpo=:Cuerpo, id_lugar=:id_lugar, Fuentes=:Fuentes, Visible=:Visible, ImagenDestacada=:ImagenDestacada, 
+        Etiquetas=:Etiquetas, Id_Usuario=:Id_Usuario  WHERE id_Posteo=:id";
 
         $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':titulo', $_POST['titulo']);
-        $stmt->bindValue(':epigrafe', $_POST['epigrafe']);
-        $stmt->bindValue(':copete', $_POST['copete']);
-        $stmt->bindValue(':cuerpo', $_POST['cuerpo']);
-        $stmt->bindValue(':lugar', $_POST['lugar']);
-        $stmt->bindValue(':fuentes', $_POST['fuentes']);
-        $stmt->bindValue(':imagen', $_POST['imagen']);
-        $stmt->bindValue(':visible', $_POST['visible']);
-        $stmt->bindValue(':etiquetas', $_POST['etiquetas']);
-        $stmt->bindValue(':id_Usuario', $_POST['id_Usuario']);
+        $stmt->bindValue(':Titulo', $_GET['Titulo']);
+        $stmt->bindValue(':Epigrafe', $_GET['Epigrafe']);
+        $stmt->bindValue(':Copete', $_GET['Copete']);
+        $stmt->bindValue(':Cuerpo', $_GET['Cuerpo']);
+        $stmt->bindValue(':id_lugar', $_GET['id_lugar']);
+        $stmt->bindValue(':Fuentes', $_GET['Fuentes']);
+        $stmt->bindValue(':Visible', $_GET['Visible']);
+        $stmt->bindValue(':ImagenDestacada', $_GET['ImagenDestacada']);
+        $stmt->bindValue(':Etiquetas', $_GET['Etiquetas']);
+        $stmt->bindValue(':Id_Usuario', $_GET['Id_Usuario']);
         $stmt->bindValue(':id', $_GET['id']);
         $stmt->execute();      
         header("HTTP/1.1 200 OK");
