@@ -16,7 +16,7 @@
             }
 
             else{
-                $sql = $pdo->prepare("SELECT * FROM categoria");
+                $sql = $pdo->prepare("SELECT * FROM categorias");
                 $sql->execute();
                 $sql->setFetchMode(PDO::FETCH_ASSOC);
                 header("HTTP/1.1 200 OK");
